@@ -43,10 +43,10 @@ function executeAnon(debug, file) {
     const outputDir = dirPath.join('\\');
     const terminal = vscode.window.createTerminal('Dev-Force');
     if (debug) {
-        terminal.sendText(`sf apex run --file ${file} | Select-String -Pattern USER_DEBUG | Out-String | Out-File -FilePath ${outputDir} -Encoding utf8`);
+        terminal.sendText(`sf apex run --file "${file}" | Select-String -Pattern USER_DEBUG | Out-String | Out-File -FilePath "${outputDir}" -Encoding utf8`);
     }
     else {
-        terminal.sendText(`sf apex run --file ${file} | Out-String | Out-File -FilePath ${outputDir} -Encoding utf8`);
+        terminal.sendText(`sf apex run --file "${file}" | Out-String | Out-File -FilePath "${outputDir}" -Encoding utf8`);
     }
     terminal.show();
 }
@@ -58,10 +58,10 @@ function pullLatestLogFromSF(debug, outputDir) {
     terminal.sendText(`$logs = sf apex log list --json | ConvertFrom-Json | Select-Object -ExpandProperty result`);
     terminal.sendText(`$recentLog = $logs | Where-Object { $_.LogUser.Name -eq $user } | Sort-Object -Property StartTime -Descending | Select-Object -First 1`);
     if (debug) {
-        terminal.sendText(`sf apex get log --log-id $recentLog.Id | Select-String -Pattern USER_DEBUG | Out-String | Out-File -FilePath ${outputDir} -Encoding utf8`);
+        terminal.sendText(`sf apex get log --log-id $recentLog.Id | Select-String -Pattern USER_DEBUG | Out-String | Out-File -FilePath "${outputDir}" -Encoding utf8`);
     }
     else {
-        terminal.sendText(`sf apex get log --log-id $recentLog.Id | Out-String | Out-File -FilePath ${outputDir} -Encoding utf8`);
+        terminal.sendText(`sf apex get log --log-id $recentLog.Id | Out-String | Out-File -FilePath "${outputDir}" -Encoding utf8`);
     }
     terminal.show();
 }
